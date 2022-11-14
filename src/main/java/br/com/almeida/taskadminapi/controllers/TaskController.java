@@ -1,6 +1,5 @@
 package br.com.almeida.taskadminapi.controllers;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.almeida.taskadminapi.dtos.TaskDto;
 import br.com.almeida.taskadminapi.models.CategoryModel;
 import br.com.almeida.taskadminapi.models.TaskModel;
-import br.com.almeida.taskadminapi.models.TeamModel;
 import br.com.almeida.taskadminapi.repositories.CategoryRepository;
 import br.com.almeida.taskadminapi.repositories.TaskRepository;
 import br.com.almeida.taskadminapi.repositories.TeamRepository;
@@ -55,7 +53,7 @@ public class TaskController {
             }
             // for (TaskModel taskModel : tasks) {
 
-            //     System.out.println(taskModel.getId());
+            // System.out.println(taskModel.getId());
             // }
             return new ResponseEntity<>(tasks, HttpStatus.OK);
         } catch (Exception e) {
@@ -86,7 +84,9 @@ public class TaskController {
 
             TaskModel _task = taskRepository
                     .save(new TaskModel(
+                            task.getCreatorId(),
                             task.getTitle(),
+                            task.getDescription(),
                             task.getDate(),
                             task.getAlertDate(),
                             task.isDone(),

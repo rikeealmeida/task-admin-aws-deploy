@@ -30,18 +30,19 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("/user")
-    public ResponseEntity<List<UserModel>> getAllUsers(@RequestParam(required = false) String username) {
+    public ResponseEntity getAllUsers(@RequestParam(required = false) String username) {
         try {
             List<UserModel> users = new ArrayList<UserModel>();
+            UserModel user = new UserModel();
             if (username == null) {
                 userRepository.findAll().forEach(users::add);
             } else {
-                users.add(userRepository.findByUsername(username).get());
+                user = userRepository.findByUsername(username).get();
             }
-            if (users.isEmpty()) {
+            if (users.isEmpty() && user == null) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            return new ResponseEntity<>(users, HttpStatus.OK);
+            return new ResponseEntity<>(username == null ? users : user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

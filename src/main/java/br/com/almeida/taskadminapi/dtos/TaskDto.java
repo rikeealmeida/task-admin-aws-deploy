@@ -12,6 +12,10 @@ import lombok.Data;
 public class TaskDto {
     @NotEmpty
     private String title;
+    @NotEmpty
+    private String description;
+    @NotNull
+    private UUID creatorId;
     @NotNull
     private UUID category;
     @NotNull
