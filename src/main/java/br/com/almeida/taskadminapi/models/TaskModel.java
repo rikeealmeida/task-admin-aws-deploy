@@ -2,7 +2,6 @@ package br.com.almeida.taskadminapi.models;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -13,15 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 // @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
@@ -34,6 +28,10 @@ public class TaskModel implements Serializable {
     private UUID id;
     @Column(name = "title", nullable = false)
     private String title;
+    @Column(name = "description", nullable = false)
+    private String description;
+    @Column(name = "creatorId", nullable = false)
+    private UUID creatorId;
     @Column(name = "date", nullable = false)
     private Date date;
     @Column(name = "alertDate")
@@ -60,12 +58,14 @@ public class TaskModel implements Serializable {
     public TaskModel() {
     }
 
-    public TaskModel(String title, Date date, Date alertDate, boolean isDone,
+    public TaskModel(UUID creatorId, String title, String description, Date date, Date alertDate, boolean isDone,
             CategoryModel category
     // ,
     // List<TeamModel> teams
     ) {
+        this.creatorId = creatorId;
         this.title = title;
+        this.description = description;
         this.date = date;
         this.alertDate = alertDate;
         this.isDone = isDone;
@@ -123,6 +123,22 @@ public class TaskModel implements Serializable {
 
     public void setCategory(CategoryModel category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public UUID getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(UUID creatorId) {
+        this.creatorId = creatorId;
     }
 
     // public List<TeamModel> getTeams() {
