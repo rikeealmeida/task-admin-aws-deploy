@@ -87,9 +87,12 @@ public class TaskController {
                             task.getCreatorId(),
                             task.getTitle(),
                             task.getDescription(),
-                            task.getDate(),
+                            task.getCreationDate(),
+                            task.getStartDate(),
+                            task.getFinishDate(),
                             task.getAlertDate(),
-                            task.isDone(),
+                            task.getPriority(),
+                            task.getStatus(),
                             _category
                     // _teams
                     ));
@@ -107,10 +110,15 @@ public class TaskController {
         if (taskData.isPresent()) {
             TaskModel _task = taskData.get();
             _task.setTitle(task.getTitle());
+            _task.setDescription(task.getDescription());
+            _task.setCreationDate(task.getCreationDate());
+            _task.setStartDate(task.getStartDate());
+            _task.setFinishDate(task.getFinishDate());
             _task.setAlertDate(task.getAlertDate());
-            _task.setDate(task.getDate());
-            _task.setDone(task.isDone());
+            _task.setPriority(task.getPriority());
+            _task.setStatus(task.getStatus());
             _task.setCategory(task.getCategory());
+            _task.setComentaries(task.getComentaries());
             return new ResponseEntity<>(taskRepository.save(_task), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

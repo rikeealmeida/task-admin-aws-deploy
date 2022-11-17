@@ -1,6 +1,7 @@
 package br.com.almeida.taskadminapi.dtos;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.constraints.NotEmpty;
@@ -19,11 +20,21 @@ public class TaskDto {
     @NotNull
     private UUID category;
     @NotNull
-    private Date date;
+    private Date creationDate;
+    @NotNull
+    private Date startDate;
+    @NotNull
+    private Date finishDate;
     @NotNull
     private Date alertDate;
     @NotNull
-    private boolean isDone;
+    private long priority;
+    @NotNull
+    private long status;
+
+    private List<UUID> comentaries;
+    // @NotNull
+    // private List<String> comments;
     // @NotNull
     // private List<UUID> teams;
 }

@@ -2,6 +2,7 @@ package br.com.almeida.taskadminapi.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -32,12 +34,21 @@ public class TaskModel implements Serializable {
     private String description;
     @Column(name = "creatorId", nullable = false)
     private UUID creatorId;
-    @Column(name = "date", nullable = false)
-    private Date date;
+    @Column(name = "creationDate", nullable = false)
+    private Date creationDate;
+    @Column(name = "startDate", nullable = false)
+    private Date startDate;
+    @Column(name = "finishDate", nullable = false)
+    private Date finishDate;
     @Column(name = "alertDate")
     private Date alertDate;
-    @Column(name = "isDone")
-    private boolean isDone;
+    @Column(name = "priority", nullable = false)
+    private long priority;
+    @Column(name = "status", nullable = false)
+    private long status;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ComentaryModel> comentaries;
     // @Column(name = "requireLocalization")
     // private boolean requireLocalization;
     // @Column(name = "latitude")
@@ -58,7 +69,8 @@ public class TaskModel implements Serializable {
     public TaskModel() {
     }
 
-    public TaskModel(UUID creatorId, String title, String description, Date date, Date alertDate, boolean isDone,
+    public TaskModel(UUID creatorId, String title, String description, Date creationDate, Date startDate,
+            Date finishDate, Date alertDate, long status, long priority,
             CategoryModel category
     // ,
     // List<TeamModel> teams
@@ -66,9 +78,12 @@ public class TaskModel implements Serializable {
         this.creatorId = creatorId;
         this.title = title;
         this.description = description;
-        this.date = date;
+        this.creationDate = creationDate;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
         this.alertDate = alertDate;
-        this.isDone = isDone;
+        this.status = status;
+        this.priority = priority;
         this.category = category;
         // this.teams = teams;
     }
@@ -93,38 +108,6 @@ public class TaskModel implements Serializable {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getAlertDate() {
-        return alertDate;
-    }
-
-    public void setAlertDate(Date alertDate) {
-        this.alertDate = alertDate;
-    }
-
-    public boolean isDone() {
-        return isDone;
-    }
-
-    public void setDone(boolean isDone) {
-        this.isDone = isDone;
-    }
-
-    public CategoryModel getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryModel category) {
-        this.category = category;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -141,20 +124,68 @@ public class TaskModel implements Serializable {
         this.creatorId = creatorId;
     }
 
-    // public List<TeamModel> getTeams() {
-    // return teams;
-    // }
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
-    // public void setTeams(List<TeamModel> teams) {
-    // this.teams = teams;
-    // }
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
 
-    // public List<TeamMemberModel> getMembers() {
-    // return members;
-    // }
+    public Date getStartDate() {
+        return startDate;
+    }
 
-    // public void setMembers(List<TeamMemberModel> members) {
-    // this.members = members;
-    // }
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
+
+    public Date getAlertDate() {
+        return alertDate;
+    }
+
+    public void setAlertDate(Date alertDate) {
+        this.alertDate = alertDate;
+    }
+
+    public long getPriority() {
+        return priority;
+    }
+
+    public void setPriority(long priority) {
+        this.priority = priority;
+    }
+
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
+    }
+
+    public List<ComentaryModel> getComentaries() {
+        return comentaries;
+    }
+
+    public void setComentaries(List<ComentaryModel> comentaries) {
+        this.comentaries = comentaries;
+    }
 
 }
