@@ -48,6 +48,7 @@ public class TaskModel implements Serializable {
     @Column(name = "status", nullable = false)
     private long status;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<ComentaryModel> comentaries;
     // @Column(name = "requireLocalization")
     // private boolean requireLocalization;
