@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 // @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
@@ -47,7 +48,7 @@ public class TaskModel implements Serializable {
     @Column(name = "status", nullable = false)
     private long status;
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     private List<ComentaryModel> comentaries;
     // @Column(name = "requireLocalization")
     // private boolean requireLocalization;
