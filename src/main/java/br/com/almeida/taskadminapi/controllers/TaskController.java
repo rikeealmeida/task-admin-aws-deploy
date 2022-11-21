@@ -104,8 +104,10 @@ public class TaskController {
 
     @PutMapping("/task/{id}")
     public ResponseEntity<TaskModel> updateTask(@PathVariable("id") UUID id,
-            @RequestBody TaskModel task) {
+            @RequestBody @Valid TaskDto task) {
         Optional<TaskModel> taskData = taskRepository.findById(id);
+
+        CategoryModel category = categoryRepository.findById(task.getCategory()).get();
 
         if (taskData.isPresent()) {
             TaskModel _task = taskData.get();
@@ -117,8 +119,8 @@ public class TaskController {
             _task.setAlertDate(task.getAlertDate());
             _task.setPriority(task.getPriority());
             _task.setStatus(task.getStatus());
-            _task.setCategory(task.getCategory());
-            _task.setComentaries(task.getComentaries());
+            _task.setCategory(category);
+            // _task.setComentaries(task.getComentaries());
             return new ResponseEntity<>(taskRepository.save(_task), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
